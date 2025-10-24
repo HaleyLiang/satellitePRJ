@@ -9,13 +9,16 @@ add_compile_definitions(NOMINMAX)
 add_compile_definitions(WIN32_LEAN_AND_MEAN)
 
 add_executable(satellitePRJ main.cpp
-        visibility_calculator.h
-        visibility_calculator.cpp
-        Funs.cpp
-        visibility_service.cpp
-        delay_service.cpp
-        link_margin_service.cpp
-        communication_quality_service.cpp)
+        src/visibility_calculator.h
+        src/visibility_calculator.cpp
+        src/Funs.cpp
+        src/visibility_service.cpp
+        src/delay_service.cpp
+        src/link_margin_service.cpp
+        src/communication_quality_service.cpp
+        src/interference_assessment_service.cpp
+        src/link_assessment_service.cpp
+        src/simplified_setup_time_service.cpp)
 
 # 添加链接库
 target_link_libraries(satellitePRJ ws2_32)

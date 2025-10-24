@@ -1,7 +1,7 @@
 #ifndef COMMUNICATION_QUALITY_SERVICE_H
 #define COMMUNICATION_QUALITY_SERVICE_H
 
-#include "nlohmann/json.hpp"
+#include "../nlohmann/json.hpp"
 #include <cmath>
 #include <string>
 

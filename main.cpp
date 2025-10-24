@@ -1,11 +1,14 @@
 #include <iostream>
-#include "Funs.h"
+#include "src/Funs.h"
 #include "cpp-httplib/httplib.h"
-#include "visibility_calculator.h"
-#include "visibility_service.h"
-#include "delay_service.h"
-#include "link_margin_service.h"
-#include "communication_quality_service.h"
+#include "src/visibility_calculator.h"
+#include "src/visibility_service.h"
+#include "src/delay_service.h"
+#include "src/link_margin_service.h"
+#include "src/communication_quality_service.h"
+#include "src/interference_assessment_service.h"
+#include "src/link_assessment_service.h"
+#include "src/simplified_setup_time_service.h"
 
 int main() {
     // 实例化服务器
@@ -115,6 +118,66 @@ int main() {
             }
 
             auto results = CommunicationQualityService::calculateAllLinkQualities(jsonBody["links"]);
+            res.set_content(results.dump(), "application/json");
+        } catch (const std::exception& e) {
+            res.status = 400;
+            res.set_content(json{{"error", e.what()}}.dump(), "application/json");
+        }
+    });
+
+    // 受干扰情况评估接口
+    svr.Post("/assess_interference", [](const httplib::Request& req, httplib::Response& res) {
+        try {
+            auto jsonBody = json::parse(req.body);
+
+            // 验证请求格式
+            if (!jsonBody.contains("links")) {
+                res.status = 400;
+                res.set_content(json{{"error", "Missing required field: links"}}.dump(), "application/json");
+                return;
+            }
+
+            auto results = InterferenceAssessmentService::assessAllLinksInterference(jsonBody["links"]);
+            res.set_content(results.dump(), "application/json");
+        } catch (const std::exception& e) {
+            res.status = 400;
+            res.set_content(json{{"error", e.what()}}.dump(), "application/json");
+        }
+    });
+
+    // 链路评估接口
+    svr.Post("/assess_links", [](const httplib::Request& req, httplib::Response& res) {
+        try {
+            auto jsonBody = json::parse(req.body);
+
+            // 验证请求格式
+            if (!jsonBody.contains("links")) {
+                res.status = 400;
+                res.set_content(json{{"error", "Missing required field: links"}}.dump(), "application/json");
+                return;
+            }
+
+            auto results = LinkAssessmentService::assessAllLinks(jsonBody["links"]);
+            res.set_content(results.dump(), "application/json");
+        } catch (const std::exception& e) {
+            res.status = 400;
+            res.set_content(json{{"error", e.what()}}.dump(), "application/json");
+        }
+    });
+
+    // 建链时长计算接口
+    svr.Post("/calculate_setup_times", [](const httplib::Request& req, httplib::Response& res) {
+        try {
+            auto jsonBody = json::parse(req.body);
+
+            // 验证请求格式
+            if (!jsonBody.contains("links")) {
+                res.status = 400;
+                res.set_content(json{{"error", "Missing required field: links"}}.dump(), "application/json");
+                return;
+            }
+
+            auto results = SimplifiedSetupTimeService::calculateAllSetupTimes(jsonBody["links"]);
             res.set_content(results.dump(), "application/json");
         } catch (const std::exception& e) {
             res.status = 400;

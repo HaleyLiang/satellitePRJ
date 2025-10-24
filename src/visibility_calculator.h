@@ -1,8 +1,8 @@
 #ifndef VISIBILITY_CALCULATOR_H
 #define VISIBILITY_CALCULATOR_H
 
-#include "nlohmann/json.hpp"
-#include "Funs.h"
+#include "../nlohmann/json.hpp"
+#include "../src/Funs.h"
 
 using json = nlohmann::json;
 

@@ -1,8 +1,8 @@
 #ifndef VISIBILITY_SERVICE_H
 #define VISIBILITY_SERVICE_H
 
-#include "nlohmann/json.hpp"
-#include "Funs.h"  // 包含已有的公共函数头文件
+#include "../nlohmann/json.hpp"
+#include "Funs.h"
 
 namespace VisibilityService {
 

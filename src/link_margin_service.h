@@ -1,7 +1,7 @@
 #ifndef LINK_MARGIN_SERVICE_H
 #define LINK_MARGIN_SERVICE_H
 
-#include "nlohmann/json.hpp"
+#include "../nlohmann/json.hpp"
 #include <string>
 #include <map>
 
