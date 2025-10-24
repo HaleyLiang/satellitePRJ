@@ -3,10 +3,16 @@ project(satellitePRJ)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# 添加这些定义
-add_compile_definitions(_WIN32_WINNT=0x0A00)
-add_compile_definitions(NOMINMAX)
-add_compile_definitions(WIN32_LEAN_AND_MEAN)
+# 添加平台特定的编译定义
+if(WIN32)
+    # Windows 特定的定义
+    add_compile_definitions(_WIN32_WINNT=0x0A00)
+    add_compile_definitions(NOMINMAX)
+    add_compile_definitions(WIN32_LEAN_AND_MEAN)
+else()
+    # Linux 特定的定义（如果有）
+    add_compile_definitions(LINUX_PLATFORM)
+endif()
 
 add_executable(satellitePRJ main.cpp
         src/visibility_calculator.h
@@ -20,9 +26,12 @@ add_executable(satellitePRJ main.cpp
         src/link_assessment_service.cpp
         src/simplified_setup_time_service.cpp)
 
-# 添加链接库
-target_link_libraries(satellitePRJ ws2_32)
-
-if (WIN32)
+# 添加平台特定的链接库
+if(WIN32)
+    # Windows 网络库
     target_link_libraries(satellitePRJ ws2_32 wsock32)
-endif ()
+else()
+    # Linux 通常不需要显式链接网络库
+    # 但如果需要，可以添加其他库，例如：
+    # target_link_libraries(satellitePRJ pthread)
+endif()

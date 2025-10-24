@@ -1,0 +1,4 @@
+**Windows**：
+cmake --build . --target satellitePRJ -j 14
+**Linux**：
+cmake --build . --target satellitePRJ -j $(nproc)

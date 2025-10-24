@@ -1,4 +1,6 @@
 卫星通信系统接口文档
+端口:8080
+
 1. 多个卫星单个地面站通信可见性接口
 **URL:** /check_visibility
 请求参数说明
@@ -273,6 +275,8 @@
     "avg_capacity_reduction": 0.157 // 平均容量下降比例
   }
 }
+
+
 7. 优选链路评估接口
 **URL:** /assess_links
 请求参数说明
@@ -327,6 +331,8 @@
     "recommendation": "建议使用中继链路..." // 总体建议
   }
 }
+
+
 8. 建链时长计算接口
 **URL:** /calculate_setup_times
 请求参数说明
